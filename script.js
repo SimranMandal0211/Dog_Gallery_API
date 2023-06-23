@@ -32,3 +32,28 @@ dropdown.change(function(){
 
     console.log(url);
 });
+
+$("form button").click(function(e){
+    e.preventDefault();
+
+    let breed = dropdown.val();
+    let subBreed = $("#dog-sub-breeds").val();
+
+    let url = "https://dog.ceo/api/breed/" + breed;
+
+    if(subBreed !== undefined) {
+        url += "/" + subBreed
+    } 
+
+    url += "/images";
+
+    $("#breed-image img").remove();
+
+    $.get(url, function (data) {
+        let imagesUrl = data.message;
+
+        for (let imageUrl of imagesUrl) {
+            breedImage.append('<img src="' + imageUrl + '" alt="' + breed + '">');
+        }
+    });
+})
