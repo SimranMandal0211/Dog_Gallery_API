@@ -8,3 +8,27 @@ $.get("https://dog.ceo/api/breeds/list/all", function (data, status) {
     }
 
 });
+
+dropdown.change(function(){
+    let breed = dropdown.val();
+    let url = "https://dog.ceo/api/breed/" + breed + "/list";
+
+    $("#dog-sub-breeds").remove();
+
+    $.get(url, function (data) {
+        if (data.message.length !== 0) {
+            let subBreeds = data.message;
+
+            dropdown.after('<select id="dog-sub-breeds"></select>');
+
+            var subDropdown = $("#dog-sub-breeds");
+
+            for (let subBreed of subBreeds) {
+                subDropdown.append('<option value="' + subBreed + '">' + subBreed + '</option>');
+                console.log(subBreed);
+            }
+        }
+    });
+
+    console.log(url);
+});
